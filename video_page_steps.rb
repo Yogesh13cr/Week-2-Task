@@ -5,7 +5,7 @@ Given("I'm on the homepage") do
   end
 end
 
-When("I select watch from the top menu") do
+When("I click on watch tab from the top menu") do
   on(ESHomePage) do |page|
     page.watch_tab_element.present?
     page.watch_tab_element.click
@@ -23,8 +23,8 @@ Then("I validate the submenu options in the watch page") do
   end
 end
 
-Given("I'm on the videos homepage") do
-  step "I select watch from the top menu"
+Given("I'm on the videos page") do
+  step "I click on watch tab from the top menu"
 end
 
 When("I click on live&shedule tab") do
@@ -73,7 +73,7 @@ When("I should be navigated to {string} page") do |tab|
   end
 end
 
-When("I select first video in the page") do
+When("I click on first video in the page") do
   on(ESWatchPage) do |page|
     page.first_video_element.present?
     page.first_video_element.click
@@ -81,9 +81,9 @@ When("I select first video in the page") do
 end
 
 Then("I should be redirected video playback page") do
-  on(ESWatchPage) do |_page|
-    sleep 10
-    # page.wait_until (10){ page.watch_video_player.visible? }
+  on(ESWatchPage) do |page|
+    sleep 10 # rubocop:disable Custom/SleepCop
+  # page.wait_until(30) { page.watch_video_player.visible? }
     expect(watch_video_player.present?).to be_truthy
   rescue StandardError => e
     p e.backtrace
@@ -92,7 +92,8 @@ end
 
 Then("I should validate the controller options") do
   on(ESWatchPage) do |_page|
-    sleep 10
+    sleep 10 # rubocop:disable Custom/SleepCop
+  # page.wait_until (30){ page.watch_video_player.visible? }
     expect(video_play_button.present?).to be_truthy
     expect(video_progress_bar.present?).to be_truthy
     expect(video_volume_button.present?).to be_truthy
